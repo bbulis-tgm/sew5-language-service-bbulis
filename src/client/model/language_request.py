@@ -25,4 +25,7 @@ class LanguageRequest:
         except Exception as e:
             print(e)
             raise Exception("Not able to connect to language detection service")
-        return response.json()
+        response_json = response.json()
+        if not response_json['success']:
+            raise Exception("An Error occured")
+        return response_json
