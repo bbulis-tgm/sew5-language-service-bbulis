@@ -2,6 +2,7 @@ import sys
 from view.view import Ui_MainWindow
 from PyQt5 import QtWidgets
 from model.language_request import LanguageRequest
+from model.html_formatter import HtmlFormatter
 
 
 class Controller(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -12,13 +13,19 @@ class Controller(QtWidgets.QMainWindow, Ui_MainWindow):
     :version: V1.0
     """
 
+    language_requester = LanguageRequest()
+    html_formatter = HtmlFormatter()
+
     def check_language(self):
         """
         checks language and connects to the language service
 
         :return: no return value
         """
-        pass
+        input = self.ui.inputField.toPlainText()
+        json_result = self.language_requester.language(input)
+        html_result = self.html_formatter.formatter(json_result)
+        self.display_output(html_result)
 
     def display_output(self, output: str):
         """
