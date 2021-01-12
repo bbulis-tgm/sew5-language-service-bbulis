@@ -23,9 +23,12 @@ class Controller(QtWidgets.QMainWindow, Ui_MainWindow):
         :return: no return value
         """
         input = self.ui.inputField.toPlainText()
-        json_result = self.language_requester.language(input)
-        html_result = self.html_formatter.formatter(json_result)
-        self.display_output(html_result)
+        try:
+            json_result = self.language_requester.language(input)
+            html_result = self.html_formatter.formatter(json_result)
+            self.display_output(html_result)
+        except Exception as e:
+            self.display_output(e)
 
     def display_output(self, output: str):
         """
